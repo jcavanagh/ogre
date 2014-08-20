@@ -1,0 +1,21 @@
+{
+  "name": "ogre",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jcavanagh/ogre",
+  "authors": [
+    "Joe Cavanagh <jcavanagh617@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "kineticjs": "~5.1.0",
+    "lodash": "~2.4.1",
+    "requirejs": "~2.1.14"
+  }
+}
