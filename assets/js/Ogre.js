@@ -18,7 +18,7 @@ define([
             });
 
             //Render a hex grid
-            Map.render(stage);
+            stage.add(Map.render());
         }
     };
 });
