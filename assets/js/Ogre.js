@@ -6,8 +6,11 @@ if (typeof define !== 'function') { var define = require('amdefine')(module); }
  * @author Joe Cavanagh
  */
 define([
-    'ogre/Map'
-], function(Map) {
+    'require'
+], function(require) {
+    //List of all units
+    var units = [];
+
     return {
         init: function() {
             //Kinetic stage
@@ -17,8 +20,32 @@ define([
                 height: 1000
             });
 
-            //Render a hex grid
-            stage.add(Map.render());
+            require([
+                'ogre/Map',
+                'ogre/UnitSelector'
+            ], function(Map, UnitSelector) {
+                //Render the initial things
+                var unitLayer = new Kinetic.Layer(),
+                    units = UnitSelector.render();
+
+                unitLayer.add(units);
+                units.x(500);
+                units.y(100);
+
+                stage.add(Map.render());
+                stage.add(unitLayer);
+            });
+        },
+
+        //Unit registration
+        registerUnit: function(unit) {
+            if(unit) {
+                units.push(unit);
+            }
+        },
+
+        getUnits: function() {
+            return units;
         }
     };
 });

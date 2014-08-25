@@ -2,13 +2,14 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module); }
 
 /**
- * Generates maps
+ * The map
  * 
  * @author Joe Cavanagh
  */
 define([
-    'ogre/MapTile'
-], function(MapTile) {
+    'ogre/MapTile',
+    'ogre/Unit'
+], function(MapTile, Unit) {
     var gridHeight = 21,
         gridWidth = 15;
 
@@ -33,7 +34,7 @@ define([
                     var hex = new MapTile(i, j);
 
                     //Add elements to layers
-                    gridLayer.add(hex);
+                    gridLayer.add(hex.render());
                 }
             }
 

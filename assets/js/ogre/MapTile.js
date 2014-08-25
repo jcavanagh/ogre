@@ -22,15 +22,36 @@ define([], function() {
         this.draw();
     }
 
+    function getPixelCoords(a, b) {
+        //Offset first and alternating columns one hex down
+        if(a % 2 === 0) {
+            b++;
+        }
+
+        //Calculate pixel x/y
+        var x = hexRadius + (a * hexSide),
+            y = hexRadius + (hexHeight * (2 * b + (a % 2)) / 2);
+
+        return [x, y];
+    }
+
     //Actual class
     var MapTile = function(x, y) {
-        var xy = this.getXYFromCoords(x, y);
-        var mX = xy[0];
-        var mY = xy[1];
+        //Store grid coords
+        this.x = x;
+        this.y = y;
 
+        //Get pixel coords
+        var xy = getPixelCoords(x, y);
+        this.pX = xy[0];
+        this.pY = xy[1];
+    };
+
+    MapTile.prototype.render = function() {
+        //Create tile
         var hexagon = new Kinetic.RegularPolygon({
-            x: mX,
-            y: mY,
+            x: this.pX,
+            y: this.pY,
             sides: 6,
             radius: hexRadius,
             fill: 'white',
@@ -40,13 +61,13 @@ define([], function() {
         });
 
         var hexLabel = new Kinetic.Text({
-            x: mX,
-            y: mY,
+            x: this.pX,
+            y: this.pY,
             fontSize: 10,
             //There's an odd Kinetic bug (?) where 1 pixel around the text box
             //will flicker the mouse enter/leave events. So, ignore events here
             listening: false,
-            text: _.pad(x + 1, 2, '0') + _.pad(y + 1, 2, '0'),
+            text: _.pad(this.x + 1, 2, '0') + _.pad(this.y + 1, 2, '0'),
             fill: 'black'
         });
 
@@ -65,17 +86,8 @@ define([], function() {
         return group;
     };
 
-    MapTile.prototype.getXYFromCoords = function(a, b) {
-        //Offset first and alternating columns one hex down
-        if(a % 2 == 0) {
-            b++;
-        }
+    MapTile.prototype.addUnit = function(unit) {
 
-        //Calculate x/y
-        var x = hexRadius + (a * hexSide),
-            y = hexRadius + (hexHeight * (2 * b + (a % 2)) / 2);
-
-        return [x, y];
     };
 
     return MapTile;
