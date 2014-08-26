@@ -1,4 +1,4 @@
-/* global Kinetic */
+/* global _, Kinetic */
 if (typeof define !== 'function') { var define = require('amdefine')(module); }
 
 /**
@@ -7,17 +7,23 @@ if (typeof define !== 'function') { var define = require('amdefine')(module); }
  * @author Joe Cavanagh
  */
 define([
-    'Ogre'
+    'ogre/UnitManager'
 ], function(
-    Ogre
+    UnitManager
 ) {
     return {
         render: function() {
+            //Dimensions and stuff
+            var containerWidth = 200,
+                containerHeight = 200,
+                headerHeight = 25,
+                group = new Kinetic.Group();
+
             //Main container
-            var selector = new Kinetic.Rect({
+            var selectorBox = new Kinetic.Rect({
                 cornerRadius: 5,
-                height: 200,
-                width: 100,
+                height: containerHeight,
+                width: containerWidth,
                 stroke: 'black',
                 fill: 'white',
             });
@@ -30,23 +36,29 @@ define([
             });
 
             //Header separator
-            var headerSep = new Kinetic.Line();
-
-            //Units
-            _.each(Ogre.getUnits(), function(unit) {
-
+            var headerSep = new Kinetic.Line({
+                points: [0, headerHeight, containerWidth, headerHeight],
+                stroke: 'black'
             });
 
             //ASSEMBLE
-            headerSep.offsetY(-20);
+            headerText.offsetX(-(containerWidth - headerText.width()) / 2);
+            headerText.offsetY(-5);
 
             //Group it
-            var group = new Kinetic.Group();
-            group.add(selector);
-            // group.add(headerText);
-            // group.add(headerSep);
+            group.add(selectorBox);
+            group.add(headerText);
+            group.add(headerSep);
+
+            //Units
+            _.each(UnitManager.getUnits(), function(unit, index) {
+                var rendered = (new unit()).render();
+                rendered.offsetX(-( 5 + (rendered.maxWidth() * (index % 3)) ));
+                rendered.offsetY(-(headerHeight + 5 + (rendered.maxHeight() * Math.floor(index / 3))) );
+                group.add(rendered);
+            });
 
             return group;
         }
-    }
+    };
 });

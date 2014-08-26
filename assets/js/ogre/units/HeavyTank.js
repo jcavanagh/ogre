@@ -6,9 +6,8 @@ if (typeof define !== 'function') { var define = require('amdefine')(module); }
  * @author Joe Cavanagh
  */
 define([
-    'Ogre',
     'ogre/Unit'
-], function(Ogre, Unit) {
+], function(Unit) {
     var HeavyTank = function() {
         return new Unit({
             name: 'Heavy Tank',
@@ -20,8 +19,6 @@ define([
             move2: 0,
         });
     };
-
-    Ogre.registerUnit(HeavyTank);
 
     return HeavyTank;
 });
