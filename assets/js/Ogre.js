@@ -14,14 +14,14 @@ define([
     //Add a couple helpful things to Kinetic
     function kineticHelpers() {
         Kinetic.Group.prototype.maxWidth = function() {
-            _.reduce(this.getChildren(), function(max, child) {
+            return _.reduce(this.getChildren(), function(max, child) {
                 var width = child.width();
                 return width > max ? width : max;
             }, 0);
         };
 
         Kinetic.Group.prototype.maxHeight = function() {
-            _.reduce(this.getChildren(), function(max, child) {
+            return _.reduce(this.getChildren(), function(max, child) {
                 var height = child.height();
                 return height > max ? height : max;
             }, 0);

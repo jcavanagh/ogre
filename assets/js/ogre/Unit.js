@@ -37,7 +37,7 @@ define([], function() {
         var unitLabel = new Kinetic.Text({
             width: this.radius * 2,
             height: this.radius * 2,
-            padding: 5,
+            padding: 15,
             fontSize: 10,
             text: this.name,
             fill: 'black',

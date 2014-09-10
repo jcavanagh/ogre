@@ -14,7 +14,7 @@ define([
     return {
         render: function() {
             //Dimensions and stuff
-            var containerWidth = 200,
+            var containerWidth = 180,
                 containerHeight = 200,
                 headerHeight = 25,
                 group = new Kinetic.Group();
@@ -52,9 +52,12 @@ define([
 
             //Units
             _.each(UnitManager.getUnits(), function(unit, index) {
-                var rendered = (new unit()).render();
-                rendered.offsetX(-( 5 + (rendered.maxWidth() * (index % 3)) ));
-                rendered.offsetY(-(headerHeight + 5 + (rendered.maxHeight() * Math.floor(index / 3))) );
+                var rendered = (new unit()).render(),
+                    offsetX = 30,
+                    offsetY = 30;
+
+                rendered.offsetX(-( offsetX + (rendered.maxWidth() * (index % 3)) ));
+                rendered.offsetY(-(headerHeight + offsetY + (rendered.maxHeight() * Math.floor(index / 3))) );
                 group.add(rendered);
             });
 
